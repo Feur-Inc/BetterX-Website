@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterX - Themes Presets</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #15202B;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            background-color: rgba(21, 32, 43, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            width: 80px; 
+            height: auto;
+            filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.5));
+            border-radius: 5px;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #1DA1F2;
+        }
+
+        main {
+            padding-top: 80px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #1DA1F2, #7856FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: #1DA1F2;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #1991DB;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(29, 161, 242, 0.3);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 0;
+        }
+
+        .feature {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1DA1F2;
+        }
+
+        @media (min-width: 1920px) {
+            .features {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        #download {
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        #download h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .download-option {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .download-option:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .download-option i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1DA1F2;
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: #1DA1F2;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .download-button:hover {
+            background-color: #1991DB;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(29, 161, 242, 0.3);
+        }
+
+        #linux-options {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+            margin-top: 1rem;
+        }
+
+        #linux-options.show {
+            max-height: 300px;
+            opacity: 1;
+        }
+
+        #linux-options button {
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #1DA1F2;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #linux-options button:hover {
+            background-color: #1991DB;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            margin-top: 4rem;
+        }
+        
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Change pour 2 colonnes */
+            max-width: 1200px;                     /* Augmente la largeur maximale */
+            margin: 0 auto;
+            gap: 2rem;
+            padding: 4rem 0;
+        }
+
+        .theme-card {
+            width: 100%;               /* Assure que la carte prend toute la largeur */
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 300px;                         /* Augmente la hauteur de l'image */
+            object-fit: cover;
+        }
+
+        .theme-content {
+            padding: 1.5rem;
+        }
+
+        .theme-content h3 {
+            color: #1DA1F2;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .copy-button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #1DA1F2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #1991DB;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        /* Ajout d'un media query pour le responsive */
+        @media (max-width: 768px) {
+            .themes-grid {
+                grid-template-columns: 1fr;        /* Retour à 1 colonne sur mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <header>
+        <div class="container">
+            <nav>
+                <img src="https://github.com/Feur-Inc/BetterX-Desktop/blob/main/build/icons/512x512.png?raw=true" alt="BetterX Logo" class="logo">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="themes.html">Themes</a></li>
+                    <li><a href="https://github.com/Feur-Inc/BetterX-Desktop">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>BetterX Theme Presets</h1>
+            <p>Customize your X experience with our handpicked theme collection</p>
+        </section>
+
+        <section class="themes-grid">
+            <div class="theme-card">
+                <img src="https://raw.githubusercontent.com/Feur-Inc/BetterX-Website/refs/heads/main/images/square.webp" alt="Square Theme Preview" class="theme-preview">
+                <div class="theme-content">
+                    <h3>Square Theme</h3>
+                    <div class="code-block">
+                        <pre><code class="language-css">.r-sdzlij, .r-1867qdf, r-st84sj, .r-j3xhw6 {
+    border-radius: 5px;
+}</code></pre>
+                    </div>
+                    <button class="copy-button" onclick="copyTheme('square')">Copy Theme</button>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <img src="https://raw.githubusercontent.com/Feur-Inc/BetterX-Website/refs/heads/main/images/discord.webp" alt="Discord Theme Preview" class="theme-preview">
+                <div class="theme-content">
+                    <h3>Discord Theme</h3>
+                    <div class="code-block">
+                        <pre><code class="language-css">body {
+    background-color: rgb(43, 45, 49);
+}
+.r-kemksi {
+    background-color: rgb(49, 51, 56);
+}
+.r-5zmot {
+    background-color: rgb(30, 31, 34);
+}</code></pre>
+                    </div>
+                    <button class="copy-button" onclick="copyTheme('discord')">Copy Theme</button>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <img src="https://raw.githubusercontent.com/Feur-Inc/BetterX-Website/refs/heads/main/images/clear glass.webp" alt="Clear Glass Theme Preview" class="theme-preview">
+                <div class="theme-content">
+                    <h3>Clear Glass Theme (Transparent)</h3>
+                    <div class="code-block">
+                        <pre><code class="language-css">.r-kemksi, 
+.r-5zmot,
+.r-yfoy6g,
+.r-14lw9ot {
+    background-color: transparent;
+}
+
+.r-g2wdr4 {
+    background-color: rgba(0,0,0,0.2) !important;
+}
+
+body {
+    background-color: rgba(0,0,0,0.55) !important;
+}
+
+div[data-testid="Dropdown"],
+div.css-175oi2r[role="listbox"],
+div.css-175oi2r[data-testid="DMDrawer"],
+div.css-175oi2r[data-viewportview="true"].r-kemksi,
+div.css-175oi2r[data-viewportview="true"].r-yfoy6g,
+div.css-175oi2r[data-viewportview="true"].r-14lw9ot,
+div[data-testid="HoverCard"],
+div[data-testid="sheetDialog"],
+div[aria-labelledby="modal-header"] {
+    background-color: rgba(0,0,0,0.85) !important;
+}</code></pre>
+                    </div>
+                    <button class="copy-button" onclick="copyTheme('clearglass')">Copy Theme</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BetterX Desktop. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-css.min.js"></script>
+    <script>
+
+        function copyTheme(theme) {
+            const themeElements = {
+                'square': `.r-sdzlij, .r-1867qdf, r-st84sj, .r-j3xhw6 {
+    border-radius: 5px;
+}`,
+                'discord': `body {
+    background-color: rgb(43, 45, 49);
+}
+.r-kemksi {
+    background-color: rgb(49, 51, 56);
+}
+.r-5zmot {
+    background-color: rgb(30, 31, 34);
+}`,
+                'clearglass': `.r-kemksi, 
+.r-5zmot,
+.r-yfoy6g,
+.r-14lw9ot {
+    background-color: transparent;
+}
+
+.r-g2wdr4 {
+    background-color: rgba(0,0,0,0.2) !important;
+}
+
+body {
+    background-color: rgba(0,0,0,0.55) !important;
+}
+
+div[data-testid="Dropdown"],
+div.css-175oi2r[role="listbox"],
+div.css-175oi2r[data-testid="DMDrawer"],
+div.css-175oi2r[data-viewportview="true"].r-kemksi,
+div.css-175oi2r[data-viewportview="true"].r-yfoy6g,
+div.css-175oi2r[data-viewportview="true"].r-14lw9ot,
+div[data-testid="HoverCard"],
+div[data-testid="sheetDialog"],
+div[aria-labelledby="modal-header"] {
+    background-color: rgba(0,0,0,0.85) !important;
+}`
+            };
+
+            navigator.clipboard.writeText(themeElements[theme])
+                .then(() => {
+                    const button = document.querySelector(`[onclick="copyTheme('${theme}')"]`);
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = 'Copy Theme';
+                    }, 2000);
+                });
+        }
+    </script>
+</body>
+</html>
