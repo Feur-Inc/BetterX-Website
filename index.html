@@ -311,7 +311,7 @@
                 <div class="download-option">
                     <i class="fab fa-windows"></i>
                     <h3>Windows</h3>
-                    <a href="https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v1.0.1-alpha/betterx-desktop.Setup.1.0.1-alpha.exe" class="download-button">Download for Windows</a>
+                    <a href="https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v2.0/betterx-desktop.Setup.2.0.0-beta.exe" class="download-button">Download for Windows</a>
                 </div>
                 <div class="download-option">
                     <i class="fab fa-linux"></i>
@@ -321,7 +321,6 @@
                         <button onclick="downloadLinux('AppImage')">AppImage</button>
                         <button onclick="downloadLinux('Snap')">Snap</button>
                         <button onclick="downloadLinux('DEB')">DEB</button>
-                        <button onclick="downloadLinux('RPM')">RPM</button>
                         <button onclick="downloadLinux('AUR')">AUR</button>
                     </div>
                 </div>
@@ -390,16 +389,13 @@
         function downloadLinux(version) {
             switch(version) {
                 case 'AppImage':
-                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v1.0.1-alpha/betterx-desktop-1.0.1-alpha.AppImage', '_blank');
+                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v2.0/betterx-desktop-2.0.0-beta.AppImage', '_blank');
                     break;
                 case 'Snap':
-                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v1.0.1-alpha/betterx-desktop_1.0.1-alpha_amd64.snap', '_blank');
+                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v2.0/betterx-desktop_2.0.0-beta_amd64.snap', '_blank');
                     break;
                 case 'DEB':
-                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v1.0.1-alpha/betterx-desktop_1.0.1-alpha_amd64.deb', '_blank');
-                    break;
-                case 'RPM':
-                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v1.0.1-alpha/betterx-desktop-1.0.1-alpha.x86_64.rpm', '_blank');
+                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v2.0/betterx-desktop_2.0.0-beta_amd64.deb', '_blank');
                     break;
                 case 'AUR':
                     window.open('https://aur.archlinux.org/packages/betterx-desktop-git', '_blank');
