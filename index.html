@@ -233,6 +233,52 @@
             background-color: #1991DB;
         }
 
+        #macos-options {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+            margin-top: 1rem;
+        }
+
+        #macos-options.show {
+            max-height: 300px;
+            opacity: 1;
+        }
+
+        #macos-options button {
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #1DA1F2;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #macos-options button:hover {
+            background-color: #1991DB;
+        }
+
+        .feature-new {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-new::after {
+            content: "NEW";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #1DA1F2;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
         footer {
             text-align: center;
             padding: 2rem 0;
@@ -265,41 +311,61 @@
         </section>
 
         <section id="features" class="features">
-            <div class="feature">
-                <h3>AdBlocker</h3>
-                <p>Blocks ads and sponsored content on X (formerly Twitter)</p>
+            <div class="feature feature-new">
+                <h3>🔍 ImageMagnifier</h3>
+                <p>Zoom into images with a magnifying glass feature for examining tiny details in photos</p>
+            </div>
+            <div class="feature feature-new">
+                <h3>🐈 Oneko</h3>
+                <p>A cute cat companion follows your cursor for a more playful browsing experience</p>
+            </div>
+            <div class="feature feature-new">
+                <h3>😺 MeowAd</h3>
+                <p>Replaces advertisements with adorable cat pictures</p>
+            </div>
+            <div class="feature feature-new">
+                <h3>📸 TweetScreenshot</h3>
+                <p>Capture tweets with a dedicated screenshot button for easy sharing</p>
+            </div>
+            <div class="feature feature-new">
+                <h3>🟢 UsersStatus</h3>
+                <p>See BetterX users' status and badges on their profiles</p>
+            </div>
+            <div class="feature feature-new">
+                <h3>🎨 Themes</h3>
+                <p>Customize your X experience with various themes</p>
+            </div>
+            <div class="feature feature-new">
+                <h3>🪟 WindowTransparency</h3>
+                <p>Adjust window transparency for a modern, sleek appearance</p>
             </div>
             <div class="feature">
-                <h3>BringTwitterBack</h3>
-                <p>Reverts X branding back to Twitter</p>
+                <h3>🛡️ AdBlocker</h3>
+                <p>Removes ads and sponsored content from X</p>
             </div>
             <div class="feature">
-                <h3>DMDrawerResizer</h3>
-                <p>Makes the DM drawer resizable and persistent across sessions</p>
+                <h3>🐦 BringTwitterBack</h3>
+                <p>Restores the classic Twitter logo and branding</p>
             </div>
             <div class="feature">
-                <h3>DontOverthink</h3>
-                <p>Adds a timer to automatically send tweets after 10 seconds</p>
+                <h3>💬 DMDrawerResizer</h3>
+                <p>Resize the Direct Message drawer with ease</p>
             </div>
             <div class="feature">
-                <h3>GifFavorites</h3>
-                <p>Add favorites like on Discord</p>
+                <h3>⏱️ DontOverthink</h3>
+                <p>Adds a 10-second timer to automatically send tweets</p>
             </div>
             <div class="feature">
-                <h3>MenuReorder</h3>
-                <p>Allows reordering of menu items in the navigation bar</p>
+                <h3>⭐ GifFavorites</h3>
+                <p>Add your favorite GIFs for quick access</p>
             </div>
             <div class="feature">
-                <h3>NoTrending</h3>
-                <p>Removes the trending sections</p>
+                <h3>📋 MenuReorder</h3>
+                <p>Customize the left sidebar menu with drag and drop</p>
             </div>
             <div class="feature">
-                <h3>QuickEmoji</h3>
-                <p>Quickly insert emojis with ":emoji:" syntax like in Discord</p>
-            </div>
-            <div class="feature">
-                <h3>RemovePremium</h3>
-                <p>Remove all the premium elements from the Twitter website</p>
+                <h3>🚫 NoTrending</h3>
+                <p>Removes the trending topics section for a cleaner interface</p>
             </div>
         </section>
 
@@ -322,6 +388,15 @@
                         <button onclick="downloadLinux('Snap')">Snap</button>
                         <button onclick="downloadLinux('DEB')">DEB</button>
                         <button onclick="downloadLinux('AUR')">AUR</button>
+                    </div>
+                </div>
+                <div class="download-option">
+                    <i class="fab fa-apple"></i>
+                    <h3>macOS</h3>
+                    <button onclick="toggleMacOSOptions()" class="download-button">Choose macOS Version</button>
+                    <div id="macos-options">
+                        <button onclick="downloadMacOS('ARM')">ARM (M1, M2)</button>
+                        <button onclick="downloadMacOS('X64')">Intel (x64)</button>
                     </div>
                 </div>
             </div>
@@ -399,6 +474,22 @@
                     break;
                 case 'AUR':
                     window.open('https://aur.archlinux.org/packages/betterx-desktop-bin', '_blank');
+                    break;
+            }
+        }
+
+        function toggleMacOSOptions() {
+            const macosOptions = document.getElementById('macos-options');
+            macosOptions.classList.toggle('show');
+        }
+
+        function downloadMacOS(version) {
+            switch(version) {
+                case 'ARM':
+                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v2.0/betterx-desktop-2.0.0-beta-arm64.dmg', '_blank');
+                    break;
+                case 'X64':
+                    window.open('https://github.com/Feur-Inc/BetterX-Desktop/releases/download/v2.0/betterx-desktop-2.0.0-beta-x64.dmg', '_blank');
                     break;
             }
         }
